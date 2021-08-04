@@ -30,6 +30,7 @@ export const Left = styled.div`
     @media (max-width: 500px){
         width: 360px;
         border-radius: 20px;
+        display: none;
     }
 `
 export const Right = styled.div`
@@ -37,21 +38,18 @@ export const Right = styled.div`
     height: 599px;
     background-color: white;
     border-radius: 0 20px 20px 0;
-    .wrapper-form{
-         margin-top: 50px;
-    }
-    
     .form{
-        width: 300px;
-        margin-left: 20px;
+        width: 400px;
+        margin-bottom: 10px;
+        margin-top: 20px;
     }
 
     h1{
         font-size: 30px;
         margin-left: 20px;
+        margin-top: 150px;
     }
+    
 
-    @media (max-width: 500px){
-        display: none;
-    }
+    
 `
