@@ -4,6 +4,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
+import PersonIcon from '@material-ui/icons/Person';
 
 export const SideNavdata = [
     
@@ -27,12 +28,12 @@ export const SideNavdata = [
     },
     {
         title: "User",
-        icon: <MailIcon style={{ fill: 'white' }} />,
+        icon: <PersonIcon style={{ fill: 'white' }} />,
         path: "/User",
         cName:'nav-text',
         
     },
-    
+
 
 ]
     

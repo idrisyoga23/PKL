@@ -21,4 +21,9 @@ export const Wrapper = styled.div`
     margin-left: 20em;
     margin-top: 5em;
     
+    .btn_wrap{
+        button{
+            background-colot: #0072BC;       
+        }
+    }
 `
