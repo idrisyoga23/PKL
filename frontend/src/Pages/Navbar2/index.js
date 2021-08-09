@@ -6,12 +6,10 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -19,9 +17,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Flex, Header } from './styles';
 import Profile from './Media/nama.jpg'
 import { SideNavdata } from '../sidebar/SideNavdata';
-import HomeIcon from '@material-ui/icons/Home';
-import WorkIcon from '@material-ui/icons/Work';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link } from 'react-router-dom';
 import Logo from './Media/unknown.png'
 import { Button } from '@material-ui/core';
@@ -67,17 +62,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  // const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handlePath = (path) => {
+    window.location.href = `${path}`
+    console.log(path)
+}
+  const handleLogout = (path) => {}
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handlePath = (path) => {
-      window.location.href = `${path}`
-  }
+  
 
   const drawer = (
     <div>
@@ -98,7 +96,7 @@ function ResponsiveDrawer(props) {
       <List>
       {SideNavdata.map((item, index) => {
               return (
-                <ListItem button key={index} className={item.cName} >
+                <ListItem button key={index} className={item.cName} onClick={() => handlePath(item.path)} >
                     
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText style={{color:'white'}} primary={item.title} />
@@ -117,7 +115,7 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+
 
   return (
     <div className={classes.root}>
@@ -150,7 +148,7 @@ function ResponsiveDrawer(props) {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
-            container={container}
+            // container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
@@ -184,13 +182,5 @@ function ResponsiveDrawer(props) {
     </div>
   );
 }
-
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default ResponsiveDrawer;
