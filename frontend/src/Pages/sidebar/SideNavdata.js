@@ -4,7 +4,6 @@ import WorkIcon from '@material-ui/icons/Work';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
-import { white } from '@material-ui/core/colors';
 
 export const SideNavdata = [
     
@@ -33,6 +32,7 @@ export const SideNavdata = [
         cName:'nav-text',
         
     },
+    
 
 ]
     
