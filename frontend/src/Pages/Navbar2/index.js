@@ -85,7 +85,7 @@ function ResponsiveDrawer(props) {
       <Header>
       <Flex direction="row">
           <Flex direction="column">
-            <img src={Profile} />
+            <img className="foto" src={Profile} />
           </Flex>
           <Flex direction="column">
               <p>nama</p>
@@ -125,7 +125,7 @@ function ResponsiveDrawer(props) {
       <AppBar style={{backgroundColor:'white'}} position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
-            color="inherit"
+            
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -134,13 +134,14 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Header>
-          <Flex direction="row" alignItems="flex-start" >
-              <Flex direction="column">
-                <img src={Logo}></img>
-              </Flex>
-              <Flex direction="column">
-                  <p style={{marginTop:'-20px',color:'black'}}>Pemerintahan Kota Administrasi Jakarta Utara</p>
-              </Flex>
+          <Flex direction="row" alignItems="flex-start" > 
+            
+                <img className="logo" src={Logo}></img>
+                <Flex direction="column" alignItems="center">
+                <p style={{color: 'black'}}>Pemerintahan Kota Administrasi </p>
+                <p style={{color: 'black',fontSize: '20px', fontWeight: 700}}> Jakarta Utara</p> 
+                </Flex>
+                <Button className="logout" variant="contained" color="primary">Logout</Button>   
             </Flex>
           </Header>
         </Toolbar>
@@ -178,7 +179,7 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-       
+          <Typography></Typography>
       </main>
     </div>
   );

@@ -10,11 +10,41 @@ export const Flex = styled.div`
     // height: 100%;
 `
 export const Header = styled.div`
-    img{
+    .logo{
         width: 90px;
         height: 90px;
         margin-left:10px;
-        margin-top:-40px;
+        margin-top:-30px;
         margin-bottom:10px;
+    }
+    .foto{
+        width: 90px;
+        height: 90px;
+        margin-left:10px;
+        margin-top:-30px;
+        margin-bottom:10px;
+    }
+    .logout{
+        width: 100px;
+        background: #3C8CBA;
+        position: absolute;
+        right: 50px;
+    }
+    @media (max-width: 414px){
+        .logo{
+            width: 40px;
+            height: 40px;
+            margin-top: 20px;
+        }
+        .foto{
+            width: 40px;
+            height: 40px;
+            margin-top: 20px;
+        }
+       
+        }
+        .logout{
+            
+        }
     }
 `
