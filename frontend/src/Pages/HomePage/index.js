@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
-import './App.css'
+// import './App.css'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
 
