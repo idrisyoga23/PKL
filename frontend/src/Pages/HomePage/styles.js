@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     
     .btn_wrap{
         button{
-            background-colot: #0072BC;       
+            background-color: #0072BC;       
         }
     }
 `

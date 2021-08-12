@@ -11,7 +11,7 @@ export const SideNavdata = [
     {
         title: "Home",
         icon: <HomeIcon style={{ fill: 'white' }}/>,
-        path: "/Home",
+        path: "/homepage",
         cName:'nav-text'
     },
     {

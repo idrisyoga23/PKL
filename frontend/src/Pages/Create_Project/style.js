@@ -18,7 +18,7 @@ justify-content: center;
 align-items: center;
 border: 1px solid;
     margin-left: 20em;
-    margin-top: 5em;
+    margin-top: 2em;
     
     .btn_wrap{
         button{
