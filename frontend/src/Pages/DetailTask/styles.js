@@ -31,7 +31,26 @@ export const Wrapper = styled.div`
 
     .btn_wrap{
         button{
-            background-color: #0072BC;       
+            background-color: #0072BC;
+            margin-top: 2em;
+            width: 142.11px;
+            height: 42px;          
+        }
+    }
+
+    .submission-box{
+        width: 1000px;
+        height: 250px;
+
+        .upload-header{
+            border-bottom: 1px solid black;
+            padding: 10px;
+        }
+
+        .upload-btn{
+            // width: 20em;
+            color: #0072BC;
+            margin-top: 2em;
         }
     }
 

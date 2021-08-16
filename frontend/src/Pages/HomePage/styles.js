@@ -17,7 +17,9 @@ export const Wrapper = styled.div`
     
     .btn_wrap{
         button{
-            background-color: #0072BC;       
+            background-color: #0072BC;
+            width: 142.11px;
+            height: 42px;       
         }
     }
 `

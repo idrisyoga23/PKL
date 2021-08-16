@@ -3,7 +3,7 @@ import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
 // import './App.css'
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@material-ui/core';
 
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },

@@ -7,7 +7,8 @@ import CreateProject from './Pages/Create_Project'
 import CreateTask from './Pages/CreateTask'
 import DaftarProject from './Pages/DaftarProject'
 import DaftarTask from './Pages/DaftarTask'
-import DetailProject from './Pages/DetailProject';
+import DetailProject from './Pages/DetailProject'
+import DetailTask from './Pages/DetailTask'
 
 const Router = () => {
     return(
@@ -17,10 +18,11 @@ const Router = () => {
                 <Route exact path='/' component={Login} />
                 <Route exact path='/create-user' component={CreateUser} />
                 <Route exact path='/create-project' component={CreateProject} />
-                <Route exact path='/create-Task' component={CreateTask} />
+                <Route exact path='/create-task' component={CreateTask} />
                 <Route exact path='/daftar-project' component={DaftarProject} />
                 <Route exact path='/daftar-task' component={DaftarTask} />
                 <Route exact path='/detail-project' component={DetailProject} />
+                <Route exact path='/detail-task' component={DetailTask} />
             </Switch>
         </BrowserRouter>
     )

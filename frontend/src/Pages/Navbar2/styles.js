@@ -33,7 +33,7 @@ export const Header = styled.div`
     }
     .logout{
         width: 100px;
-        background: #3C8CBA;
+        background: #0072BC;
         position: absolute;
         right: 50px;
     }

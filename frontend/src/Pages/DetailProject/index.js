@@ -2,8 +2,9 @@ import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
 import { makeStyles } from '@material-ui/core/styles';
-import Icon from '@material-ui/core/Icon';
-import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
+import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, IconButton } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { Link } from 'react-router-dom';
 
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
@@ -29,8 +30,7 @@ const columns = [
   
   const useStyles = makeStyles({
     root: {
-      width: '985px',
-      marginTop: '2em',
+      width: '1000px',
     },
     container: {
       maxHeight: 440,
@@ -57,6 +57,7 @@ const DetailProject = () => {
         <>
             <Navbar />
             <Wrapper>
+            <h1>Detail Project</h1>
                 <Flex direction="row" justify="center">
                     <Paper className="box">
                         <Flex direction="row" className="title-wrap">
@@ -87,15 +88,18 @@ const DetailProject = () => {
                             </Flex>
                     </Paper>
                 </Flex>
-                <Flex direction="row" className="btn_wrap" >
-                <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    endIcon={<Icon>add</Icon>}
-                >
-                    Tambah Task
-                </Button>
+                <Flex direction="column">
+                <Flex direction="row" justify="center" style={{marginTop: "2em"}}>
+                    <Paper className="text-box">
+                            <Flex direction="row">
+                                <p>Task List</p>
+                                <IconButton>
+                                    <Link to="/create-task">
+                                        <AddCircleIcon style={{color: "#FFFFFF"}} />
+                                    </Link>
+                                </IconButton>
+                            </Flex>
+                    </Paper>
                 </Flex>
                 <Flex direction="row" justify="center">
                     <Paper className={classes.root}>
@@ -143,6 +147,7 @@ const DetailProject = () => {
                         />
                     </Paper>
                 </Flex>  
+                </Flex> 
             </Wrapper> 
         </>
     )
