@@ -9,6 +9,7 @@ import DaftarProject from './Pages/DaftarProject'
 import DaftarTask from './Pages/DaftarTask'
 import DetailProject from './Pages/DetailProject'
 import DetailTask from './Pages/DetailTask'
+import ValidationTask from './Pages/ValidationTask'
 
 const Router = () => {
     return(
@@ -23,6 +24,7 @@ const Router = () => {
                 <Route exact path='/daftar-task' component={DaftarTask} />
                 <Route exact path='/detail-project' component={DetailProject} />
                 <Route exact path='/detail-task' component={DetailTask} />
+                <Route exact path='/validation-task' component={ValidationTask} />
             </Switch>
         </BrowserRouter>
     )

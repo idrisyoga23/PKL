@@ -20,4 +20,18 @@ export const Wrapper = styled.div`
             background-color: #0072BC;       
         }
     }
+
+    .text-box{
+        width: 1000px;
+        height: 50px;
+        background: #0072BC;
+        border-radius: 5px 5px 0 0;
+        
+        p{
+            color: white;
+            margin-left: 2em;
+            font-weight: 600;
+            font-size: 15px;
+        }
+    }
 `

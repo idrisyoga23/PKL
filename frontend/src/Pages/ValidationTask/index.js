@@ -4,9 +4,18 @@ import Navbar from '../Navbar2'
 import { Paper, Button } from '@material-ui/core';
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import BackupIcon from '@material-ui/icons/Backup';
+import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import FormatItalicRoundedIcon from '@material-ui/icons/FormatItalicRounded';
+import FormatUnderlinedRoundedIcon from '@material-ui/icons/FormatUnderlinedRounded';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
   
 
-const DetailTask = () => { 
+const ValidationTask = () => { 
 
     return (
         <>
@@ -28,7 +37,7 @@ const DetailTask = () => {
                                 <p>12 April 2021</p>
                                 <p>30 April 2021</p>
                                 <p>Budi Sudarsono</p>
-                                <p>Selesai</p>
+                                <p>Ditolak</p>
                             </Flex>
                         </Flex>
                     </Paper>
@@ -62,12 +71,31 @@ const DetailTask = () => {
                         </Flex>
                     </Paper>
                     </Flex>
+                    <Flex direction="row" justify="center" style={{marginTop: "2em"}}>
+                    <Paper className="text-box">
+                            <Flex direction="row">
+                                <p>Komentar</p>
+                            </Flex>
+                    </Paper>
+                </Flex>
+                    <Flex direction="row" justify="center">
+                    <Paper className="submission-box">
+                        <Flex direction="row" alignItems="center" className="upload-header">
+                            <FormatBoldIcon fontSize="large" />
+                            <FormatItalicRoundedIcon fontSize="large" />
+                            <FormatUnderlinedRoundedIcon fontSize="large" />
+                            <FormatAlignLeftIcon fontSize="large" style={{marginLeft: "0.5em"}} />
+                            <FormatAlignCenterIcon fontSize="large" />
+                            <FormatAlignRightIcon fontSize="large" />
+                            <FormatAlignJustifyIcon fontSize="large" />
+                            <FormatListBulletedIcon fontSize="large" style={{marginLeft: "0.5em"}} />
+                            <FormatListNumberedIcon fontSize="large" />
+                        </Flex>
+                    </Paper>
+                    </Flex>
                 <Flex direction="row" justify="center" className="btn_wrap" >
                     <Button variant="contained" color="primary">
-                        Terima
-                    </Button>
-                    <Button variant="contained" color="primary" style={{marginLeft: '5em'}}>
-                        Tolak
+                        Kirim
                     </Button>
                 </Flex>
             </Wrapper> 
@@ -75,4 +103,4 @@ const DetailTask = () => {
     )
 }
 
-export default DetailTask
+export default ValidationTask

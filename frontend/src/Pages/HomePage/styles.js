@@ -19,7 +19,22 @@ export const Wrapper = styled.div`
         button{
             background-color: #0072BC;
             width: 142.11px;
-            height: 42px;       
+            height: 42px;
+            margin-left: 4.2em;       
+        }
+    }
+
+    .text-box{
+        width: 1000px;
+        height: 50px;
+        background: #0072BC;
+        border-radius: 5px 5px 0 0;
+        
+        p{
+            color: white;
+            margin-left: 2em;
+            font-weight: 600;
+            font-size: 15px;
         }
     }
 `
