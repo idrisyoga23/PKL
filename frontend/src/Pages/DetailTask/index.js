@@ -2,11 +2,23 @@ import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
 import { Paper, Button } from '@material-ui/core';
+import PopUp from '../PopUp'
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import BackupIcon from '@material-ui/icons/Backup';
+import Modal from '@material-ui/core/Modal';
   
 
 const DetailTask = () => { 
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
 
     return (
         <>
@@ -63,13 +75,14 @@ const DetailTask = () => {
                     </Paper>
                     </Flex>
                 <Flex direction="row" justify="center" className="btn_wrap" >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={() => handleOpen() }>
                         Terima
                     </Button>
-                    <Button variant="contained" color="primary" style={{marginLeft: '5em'}}>
+                    <Button variant="contained" color="primary" style={{marginLeft: '5em'}} onClick={() => handleOpen() }>
                         Tolak
                     </Button>
                 </Flex>
+                <PopUp open={open} handleClose={() => handleClose() } />
             </Wrapper> 
         </>
     )
