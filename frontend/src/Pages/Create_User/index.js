@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../Navbar2'
+import PopUp from '../PopUp'
 import { Wrapper } from './style'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@material-ui/core';
@@ -31,6 +32,16 @@ export default function Create_User() {
 
     const handleChange = (event) => {
       setRole(event.target.value);
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+      
+    const handleClose = () => {
+        setOpen(false);
     };
         return (
         <>
@@ -105,11 +116,12 @@ export default function Create_User() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => handleOpen() }
           >
             Masukan 
           </Button>
           </form> 
-       
+          <PopUp open={open} handleClose={() => handleClose() } />
       
           </Wrapper>
         </>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../Navbar2'
+import PopUp from '../PopUp'
 import { Wrapper } from './style'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@material-ui/core';
@@ -41,7 +42,18 @@ export default function Index() {
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
   
-      };
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+      
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <>
          <Navbar />
@@ -111,12 +123,14 @@ export default function Index() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => handleOpen() }
           >
             Masukan 
           </Button>
           </form> 
        
         </MuiPickersUtilsProvider>
+        <PopUp open={open} handleClose={() => handleClose() } />
           </Wrapper>
         </>
     )

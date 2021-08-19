@@ -10,6 +10,7 @@ import DaftarTask from './Pages/DaftarTask'
 import DetailProject from './Pages/DetailProject'
 import DetailTask from './Pages/DetailTask'
 import ValidationTask from './Pages/ValidationTask'
+import UserList from './Pages/UserList'
 import PopUp from './Pages/PopUp'
 
 const Router = () => {
@@ -26,6 +27,7 @@ const Router = () => {
                 <Route exact path='/detail-project' component={DetailProject} />
                 <Route exact path='/detail-task' component={DetailTask} />
                 <Route exact path='/validation-task' component={ValidationTask} />
+                <Route exact path='/user-list' component={UserList} />
                 <Route exact path='/popup' component={PopUp} />
             </Switch>
         </BrowserRouter>

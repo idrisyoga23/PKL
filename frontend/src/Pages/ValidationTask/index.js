@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
+import PopUp from '../PopUp'
 import { Paper, Button } from '@material-ui/core';
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import BackupIcon from '@material-ui/icons/Backup';
@@ -15,7 +16,17 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
   
 
-const ValidationTask = () => { 
+const ValidationTask = () => {
+    
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
 
     return (
         <>
@@ -94,10 +105,11 @@ const ValidationTask = () => {
                     </Paper>
                     </Flex>
                 <Flex direction="row" justify="center" className="btn_wrap" >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={() => handleOpen() }>
                         Kirim
                     </Button>
                 </Flex>
+                <PopUp open={open} handleClose={() => handleClose() } />
             </Wrapper> 
         </>
     )
