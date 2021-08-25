@@ -7,14 +7,14 @@ import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, 
 
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
-    { id: 'nama_project', label: 'Nama Proejct', minWidth: 100 },
+    { id: 'nama_task', label: 'Nama Task', minWidth: 100 },
     { id: 'status', label: 'Status', minWidth: 30 },
   
     
   ];
   
-  function createData(no, nama_project, status) {
-    return { no, nama_project, status };
+  function createData(no, nama_task, status) {
+    return { no, nama_task, status };
   }
   
   const rows = [  
@@ -60,7 +60,7 @@ const DaftarTask = () => {
               <Flex direction="row" justify="center" style={{marginTop: "2em"}}>
                   <Paper className="text-box">
                           <Flex direction="row">
-                              <p>Daftar Project</p>
+                              <p>Daftar Task</p>
                           </Flex>
                   </Paper>
               </Flex>

@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     
     .paper{
         width: 26vw;
-        height: 40vh;
+        height: 50vh;
 
         h2{
             margin-bottom: 0;
