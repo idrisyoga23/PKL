@@ -6,12 +6,18 @@ import TextField from '@material-ui/core/TextField';
 import {Visibility, VisibilityOff} from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 import { InputAdornment, IconButton } from '@material-ui/core';
+
+import axios from 'axios';
+import {useHistory} from 'react-router-dom'
+
 const Login = () => {
+    const history = useHistory()
     const [values, setValues] = React.useState({
         username:'',
         password:'',
         isError:false,
         })
+        const token = localStorage.getItem("token");
         const [isShowed,setIsShowed] = React.useState(false)
         const [isLoading, setIsLoading] = React.useState(false)
     
@@ -24,6 +30,54 @@ const Login = () => {
                 setValues(prev=>({...prev, password:value}))
             }
         }
+        const handlePost = ()=>{
+            const user = {
+                username: values.username,
+                password: values.password,
+                
+            }
+            axios.post(`localhost:8000/api/login`, user , {headers: {
+                Authorization: 'Bearer ' + token
+              }}).then(res =>{
+                console.log(res.data)
+                if(res.data.auth === false){
+                    setValues({
+                        username:'',
+                        password:''
+                        
+                    })
+                }
+                else{
+                    const { token } = res.data;
+                    localStorage.setItem('token', token);
+                    history.push('/')
+                }
+            })
+            // setIsLoading(true);
+            // dispatch(login(values.username,values.password)).then(
+            // (res)=>{
+            //     if(res.value.data.auth===false){
+            //         setValues({username:'',
+            //         password:'',
+            //         isError:true,})
+            //     }
+            //     else{
+            //         const {token} = res.value.data;
+            //         localStorage.setItem('token',token);
+            //         sessionServive.saveSession({ token })
+            //         .then(async() => {
+            //             await sessionServive.saveUser(res.value.data).then(
+            //                 res=>{
+            //                     setValues(prev=>({...prev, isError:false}))
+            //                     setIsLoading(false)
+            //                 }
+            //             )
+            //         })
+            //     }
+            // }
+            // )
+        }
+
         const handleOpenPass = ()=>{
             setIsShowed(!isShowed)
         }
@@ -70,7 +124,7 @@ const Login = () => {
                 }
                 </Flex>
                 <Flex direction="column" justify="center" alignItems="center">
-                <Button className="form" variant="contained" justify="center" >
+                <Button className="form" variant="contained" justify="center" onClick={()=>handlePost()} >
                     Masuk 
                 </Button> 
                 </Flex>   
