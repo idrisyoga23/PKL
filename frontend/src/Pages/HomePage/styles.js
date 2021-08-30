@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     
 
     margin-left: 20em;
-    margin-top: 5em;
+    margin-top: 2em;
     
     .btn_wrap{
         button{
