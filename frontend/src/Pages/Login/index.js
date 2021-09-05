@@ -36,8 +36,10 @@ const Login = () => {
                 password: values.password,
                 
             }
-            axios.post(`localhost:8000/api/login`, user , {headers: {
-                Authorization: 'Bearer ' + token
+            axios.post(`http://127.0.0.1:8000/api/login`, user , {headers: {
+                Authorization: 'Bearer ' + token,
+                'Content-Type': 'application/json',
+         Accept: 'application/json'
               }}).then(res =>{
                 console.log(res.data)
                 if(res.data.auth === false){
