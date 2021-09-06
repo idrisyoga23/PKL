@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -28,11 +29,36 @@ const useStyles = makeStyles((theme) => ({
   
 export default function Create_User() {
     const classes = useStyles();
-    const [Role, setRole] = React.useState('');
+    const [values, setValues] = React.useState({
+      nama_depan:'',
+      nama_bel:'',
+      username:'',
+      password:'',
+      role: '',
+      isError:false,
+      })
+    // const handleChange = (event) => {
+    //   setRole(event.target.value);
+    // };
 
-    const handleChange = (event) => {
-      setRole(event.target.value);
-    };
+    const handleInput=(form)=>(event)=>{
+      const {value} = event.target;
+      if(form==='nama_depan'){
+          setValues(prev=>({...prev,nama_depan:value}))
+      }
+      if(form==='nama_bel'){
+          setValues(prev=>({...prev, nama_bel:value}))
+      }
+      if(form==='role'){
+        setValues(prev=>({...prev, role:value}))
+      }
+      if(form==='username'){
+        setValues(prev=>({...prev, id:value}))
+      }
+      if(form==='password'){
+        setValues(prev=>({...prev, password:value}))
+      }
+  }
 
     const [open, setOpen] = React.useState(false);
 
@@ -43,6 +69,26 @@ export default function Create_User() {
     const handleClose = () => {
         setOpen(false);
     };
+    const handlePost = ()=>{
+      const register = {
+          nama_depan: values.nama_depan,
+          nama_bel: values.password,
+          username: values.id,
+          password: values.password,
+          role: values.role,          
+      }
+      axios.post(`http://127.0.0.1:8000/api/register`, register ).then(res =>{
+          console.log(res.data)
+          setValues({
+            nama_depan:'',
+            nama_bel:'',
+            username:'',
+            password:'',
+            role: '',
+        })
+          
+      })
+  }
         return (
         <>
           <Navbar />  
@@ -50,6 +96,7 @@ export default function Create_User() {
           
           <form className={classes.form} noValidate>
           <TextField
+           values={values.nama_depan} onChange={handleInput('nama_depan')}
             variant="outlined"
             margin="normal"
            
@@ -60,9 +107,9 @@ export default function Create_User() {
             autoFocus
           />
           <TextField
+          values={values.nama_bel} onChange={handleInput('nama_bel')}
             variant="outlined"
             margin="normal"
-       
             fullWidth
             name="Nama_belakang"
             label="Nama Belakang"
@@ -70,44 +117,37 @@ export default function Create_User() {
             id="nama_bel"
           
           />
-          <InputLabel id="demo-simple-select-label">Role</InputLabel>
-          <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={Role}
-          onChange={handleChange}
-          label= "role"
-          variant="outlined"
-          margin="normal"
-          fullWidth
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>User</MenuItem>
-          <MenuItem value={20}>Project Manager</MenuItem>
-         
-        </Select>
         <TextField
             variant="outlined"
             margin="normal"
-       
+            values={values.id} onChange={handleInput('username')}
             fullWidth
-            name="Id"
-            label="Id"
-            type="Id"
-            id="Id"
+            name="username"
+            label="username"
+            type="username"
+            id="username"
           
           />
           <TextField
             variant="outlined"
             margin="normal"
-       
+            values={values.password} onChange={handleInput('password')}
             fullWidth
             name="Password"
             label="password"
             type="password"
             id="password"
+          
+          />
+          <TextField
+          values={values.role} onChange={handleInput('role')}
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="role"
+            label="role"
+            type="role"
+            id="role"
           
           />
            <Button
@@ -116,7 +156,7 @@ export default function Create_User() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleOpen() }
+            onClick={() => handlePost() }
           >
             Masukan 
           </Button>

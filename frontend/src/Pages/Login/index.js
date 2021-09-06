@@ -52,32 +52,9 @@ const Login = () => {
                 else{
                     const { token } = res.data;
                     localStorage.setItem('token', token);
-                    history.push('/')
+                    history.push('/homepage')
                 }
             })
-            // setIsLoading(true);
-            // dispatch(login(values.username,values.password)).then(
-            // (res)=>{
-            //     if(res.value.data.auth===false){
-            //         setValues({username:'',
-            //         password:'',
-            //         isError:true,})
-            //     }
-            //     else{
-            //         const {token} = res.value.data;
-            //         localStorage.setItem('token',token);
-            //         sessionServive.saveSession({ token })
-            //         .then(async() => {
-            //             await sessionServive.saveUser(res.value.data).then(
-            //                 res=>{
-            //                     setValues(prev=>({...prev, isError:false}))
-            //                     setIsLoading(false)
-            //                 }
-            //             )
-            //         })
-            //     }
-            // }
-            // )
         }
 
         const handleOpenPass = ()=>{

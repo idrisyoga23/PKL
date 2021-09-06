@@ -27,7 +27,7 @@ export const SideNavdata = [
     {
         title: "User",
         icon: <PersonIcon style={{ fill: 'white' }} />,
-        path: "/User",
+        path: "/create-user",
         cName:'nav-text',
         
     },
