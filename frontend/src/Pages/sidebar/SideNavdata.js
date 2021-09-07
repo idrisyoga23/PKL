@@ -15,13 +15,13 @@ export const SideNavdata = [
     {
         title: "Project",
         icon: <WorkIcon style={{ fill: 'white'}} />,
-        path: "/Project",
+        path: "/daftar-project",
         cName:'nav-text'
     },
     {
         title: "Task",
         icon: <AssignmentIcon style={{ fill: 'white' }} />,
-        path: "/Task",
+        path: "/daftar-task",
         cName:'nav-text'
     },
     {

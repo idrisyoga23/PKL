@@ -20,6 +20,7 @@ const Login = () => {
         const token = localStorage.getItem("token");
         const [isShowed,setIsShowed] = React.useState(false)
         const [isLoading, setIsLoading] = React.useState(false)
+        const [isInvalid, setIsInvalid] = React.useState(false)
     
         const handleInput=(form)=>(event)=>{
             const {value} = event.target;
@@ -48,10 +49,15 @@ const Login = () => {
                         password:''
                         
                     })
+                    setIsInvalid(true)
                 }
                 else{
                     const { token } = res.data;
+                    const { username } = res.data;
+                    const { role } = res.data;
                     localStorage.setItem('token', token);
+                    localStorage.setItem('username', username)
+                    localStorage.setItem('role', role)
                     history.push('/homepage')
                 }
             })
@@ -105,7 +111,10 @@ const Login = () => {
                 <Flex direction="column" justify="center" alignItems="center">
                 <Button className="form" variant="contained" justify="center" onClick={()=>handlePost()} >
                     Masuk 
-                </Button> 
+                </Button>
+                {isInvalid && 
+                    <p>Username atau Password salah</p>
+                } 
                 </Flex>   
             </Right>
         </Wrapper>

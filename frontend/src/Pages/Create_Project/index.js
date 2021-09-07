@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import Navbar from '../Navbar2'
 import PopUp from '../PopUp'
 import { Wrapper } from './style'
@@ -37,10 +38,10 @@ export default function Index() {
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
-
+      console.log(date)
     };
     const handleDateChange1 = (date) => {
-        setSelectedDate1(date);
+      setSelectedDate1(date);
   
     };
     const [open, setOpen] = React.useState(false);
@@ -49,9 +50,64 @@ export default function Index() {
         setOpen(true);
     };
       
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
       };
+    
+    const handleInput=(form)=>(event)=>{
+      const {value} = event.target;
+      if(form==='nama_project'){
+        setValues(prev=>({...prev,nama_project:value}))
+      }
+      if(form==='tanggal_awal'){
+        setValues(prev=>({...prev, tanggal_awal:value}))
+      }
+      if(form==='tanggal_akhir'){
+        setValues(prev=>({...prev, tanggal_akhir:value}))
+      }
+      if(form==='nama_manager'){
+        setValues(prev=>({...prev, nama_manager:value}))
+      }
+      if(form==='nama_karyawan'){
+        setValues(prev=>({...prev, nama_karyawan:value}))
+      }
+      if(form==='deskripsi'){
+        setValues(prev=>({...prev, deskripsi:value}))
+      }
+  }
+    
+    const [values, setValues] = React.useState({
+      nama_project:'',
+      tanggal_awal:'',
+      tanggal_akhir:'',
+      nama_manager:'',
+      nama_karyawan: '',
+      deskripsi: '',
+      isError:false,
+      })
+
+    const handlePost = ()=>{
+      const createproject = {
+          nama_project: values.nama_project,
+          tanggal_awal: selectedDate,
+          tanggal_akhir: selectedDate1,
+          nama_manager: values.nama_manager,
+          nama_karyawan: values.nama_karyawan,
+          deskripsi: values.deskripsi,          
+      }
+      axios.post(`http://127.0.0.1:8000/api/create-project`, createproject ).then(res =>{
+            console.log(res.data)
+            setValues({
+              nama_project:'',
+              tanggal_awal:'',
+              tanggal_akhir:'',
+              nama_manager:'',
+              nama_karyawan: '',
+              deskripsi: '',
+          })
+            
+        })
+    }
     return (
         <>
          <Navbar />
@@ -59,6 +115,7 @@ export default function Index() {
          <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <form className={classes.form} noValidate>
           <TextField
+            values={values.nama_project} onChange={handleInput('nama_project')}
             variant="outlined"
             margin="normal"
            
@@ -80,6 +137,7 @@ export default function Index() {
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
+          
           }}
         />
         <KeyboardDatePicker
@@ -97,6 +155,7 @@ export default function Index() {
           }}
         />
         <TextField
+            values={values.nama_manager} onChange={handleInput('nama_manager')}
             variant="outlined"
             margin="normal"
        
@@ -105,6 +164,7 @@ export default function Index() {
           
           />
           <TextField
+            values={values.nama_karyawan} onChange={handleInput('nama_karyawan')}
             variant="outlined"
             margin="normal"
        
@@ -113,6 +173,7 @@ export default function Index() {
           
           />
           <TextField
+                values={values.deskripsi} onChange={handleInput('deskripsi')}
                 id="standard-textarea"
                 label="Deksripsi"
                margin="normal"
@@ -128,7 +189,7 @@ export default function Index() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleOpen() }
+            onClick={() => handlePost() }
           >
             Masukan 
           </Button>

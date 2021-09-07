@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import {headers} from '../../Config'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -62,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
+  const token = localStorage.getItem('token')
   // const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -70,7 +73,16 @@ function ResponsiveDrawer(props) {
     window.location.href = `${path}`
     console.log(path)
 }
-  const handleLogout = (path) => {}
+  const handleLogout = (path) => {
+    axios.post(`http://127.0.0.1:8000/api/logout`, headers()).then((res) => {
+      console.log(res.data)
+      localStorage.removeItem('token')
+      window.location.href= '/'
+    })
+  }
+
+  const role = localStorage.getItem('role')
+  const username = localStorage.getItem('username')
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -86,8 +98,9 @@ function ResponsiveDrawer(props) {
             <img className="foto" src={Profile} />
           </Flex>
           <Flex direction="column">
-              <p>nama</p>
-              <p>USER</p>
+              
+              <p>{username}</p>
+              <p>{role}</p>
           </Flex>
       </Flex>
       </Header>
@@ -139,7 +152,7 @@ function ResponsiveDrawer(props) {
                 <p style={{color: 'black'}}>Pemerintahan Kota Administrasi </p>
                 <p style={{color: 'black',fontSize: '20px', fontWeight: 700}}> Jakarta Utara</p> 
                 </Flex>
-                <Button className="logout" variant="contained" color="primary">Logout</Button>   
+                <Button className="logout" variant="contained" color="primary" onClick={handleLogout}>Logout</Button>   
             </Flex>
           </Header>
         </Toolbar>

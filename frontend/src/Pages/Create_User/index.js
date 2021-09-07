@@ -53,7 +53,7 @@ export default function Create_User() {
         setValues(prev=>({...prev, role:value}))
       }
       if(form==='username'){
-        setValues(prev=>({...prev, id:value}))
+        setValues(prev=>({...prev, username:value}))
       }
       if(form==='password'){
         setValues(prev=>({...prev, password:value}))
@@ -73,7 +73,7 @@ export default function Create_User() {
       const register = {
           nama_depan: values.nama_depan,
           nama_bel: values.password,
-          username: values.id,
+          username: values.username,
           password: values.password,
           role: values.role,          
       }
@@ -120,7 +120,7 @@ export default function Create_User() {
         <TextField
             variant="outlined"
             margin="normal"
-            values={values.id} onChange={handleInput('username')}
+            values={values.username} onChange={handleInput('username')}
             fullWidth
             name="username"
             label="username"
