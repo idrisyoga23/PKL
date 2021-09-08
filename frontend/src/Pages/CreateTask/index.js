@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import Navbar from '../Navbar2'
 import PopUp from '../PopUp'
 import { Wrapper } from './style'
@@ -54,6 +55,55 @@ export default function Index() {
         setOpen(false);
     };
 
+    const handleInput=(form)=>(event)=>{
+      const {value} = event.target;
+      if(form==='nama_task'){
+        setValues(prev=>({...prev,nama_task:value}))
+      }
+      if(form==='tanggal_mulai'){
+        setValues(prev=>({...prev, tanggal_mulai:value}))
+      }
+      if(form==='tanggal_akhir'){
+        setValues(prev=>({...prev, tanggal_akhir:value}))
+      }
+      if(form==='nama_karyawan'){
+        setValues(prev=>({...prev, nama_karyawan:value}))
+      }
+      if(form==='deskripsi'){
+        setValues(prev=>({...prev, deskripsi:value}))
+      }
+  }
+
+    const [values, setValues] = React.useState({
+      nama_task:'',
+      tanggal_mulai:'',
+      tanggal_akhir:'',
+      nama_karyawan: '',
+      deskripsi: '',
+      isError:false,
+      })
+
+    const handlePost = ()=>{
+      const createtask = {
+          nama_task: values.nama_task,
+          tanggal_mulai: selectedDate,
+          tanggal_akhir: selectedDate1,
+          nama_karyawan: values.nama_karyawan,
+          deskripsi: values.deskripsi,          
+      }
+      axios.post(`http://127.0.0.1:8000/api/task`, createtask ).then(res =>{
+            console.log(res.data)
+            setValues({
+              nama_task:'',
+              tanggal_mulai:'',
+              tanggal_akhir:'',
+              nama_karyawan: '',
+              deskripsi: '',
+          })
+            
+        })
+    }
+
     return (
         <>
          <Navbar />
@@ -61,6 +111,7 @@ export default function Index() {
          <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <form className={classes.form} noValidate>
           <TextField
+            values={values.nama_task} onChange={handleInput('nama_task')}
             variant="outlined"
             margin="normal"
            
@@ -100,6 +151,7 @@ export default function Index() {
         />
         
           <TextField
+            values={values.nama_karyawan} onChange={handleInput('nama_karyawan')}
             variant="outlined"
             margin="normal"
        
@@ -108,6 +160,7 @@ export default function Index() {
           
           />
           <TextField
+                values={values.deskripsi} onChange={handleInput('deskripsi')}
                 id="standard-textarea"
                 label="Deksripsi"
                margin="normal"
@@ -123,7 +176,7 @@ export default function Index() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleOpen() }
+            onClick={() => handlePost() }
           >
             Masukan 
           </Button>
