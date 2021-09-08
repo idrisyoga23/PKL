@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Index() {
     const classes = useStyles();
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
-    const [selectedDate1, setSelectedDate1] = React.useState(new Date('2020-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2021-08-18T21:11:54'));
+    const [selectedDate1, setSelectedDate1] = React.useState(new Date('2021-08-18T21:11:54'));
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -59,8 +59,8 @@ export default function Index() {
       if(form==='nama_project'){
         setValues(prev=>({...prev,nama_project:value}))
       }
-      if(form==='tanggal_awal'){
-        setValues(prev=>({...prev, tanggal_awal:value}))
+      if(form==='tanggal_mulai'){
+        setValues(prev=>({...prev, tanggal_mulai:value}))
       }
       if(form==='tanggal_akhir'){
         setValues(prev=>({...prev, tanggal_akhir:value}))
@@ -78,7 +78,7 @@ export default function Index() {
     
     const [values, setValues] = React.useState({
       nama_project:'',
-      tanggal_awal:'',
+      tanggal_mulai:'',
       tanggal_akhir:'',
       nama_manager:'',
       nama_karyawan: '',
@@ -89,17 +89,17 @@ export default function Index() {
     const handlePost = ()=>{
       const createproject = {
           nama_project: values.nama_project,
-          tanggal_awal: selectedDate,
+          tanggal_mulai: selectedDate,
           tanggal_akhir: selectedDate1,
           nama_manager: values.nama_manager,
           nama_karyawan: values.nama_karyawan,
           deskripsi: values.deskripsi,          
       }
-      axios.post(`http://127.0.0.1:8000/api/create-project`, createproject ).then(res =>{
+      axios.post(`http://127.0.0.1:8000/api/project`, createproject ).then(res =>{
             console.log(res.data)
             setValues({
               nama_project:'',
-              tanggal_awal:'',
+              tanggal_mulai:'',
               tanggal_akhir:'',
               nama_manager:'',
               nama_karyawan: '',
@@ -132,7 +132,7 @@ export default function Index() {
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="tanggal_mulai"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
@@ -147,7 +147,7 @@ export default function Index() {
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="tanggal_akhir"
           value={selectedDate1}
           onChange={handleDateChange1}
           KeyboardButtonProps={{
