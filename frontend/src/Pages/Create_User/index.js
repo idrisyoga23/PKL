@@ -55,7 +55,7 @@ export default function Create_User() {
       nama_bel:'',
       username:'',
       password:'',
-      role: 1,
+      role: '',
       isError:false,
       })
 
@@ -71,8 +71,8 @@ export default function Create_User() {
       if(form==='nama_bel'){
           setValues(prev=>({...prev, nama_bel:value}))
       }
-      if(form==='id_role'){
-        setValues(prev=>({...prev, id_role:value}))
+      if(form==='role'){
+        setValues(prev=>({...prev, role:value}))
       }
       if(form==='username'){
         setValues(prev=>({...prev, username:value}))
@@ -97,7 +97,7 @@ export default function Create_User() {
           nama_bel: values.password,
           username: values.username,
           password: values.password,
-          id_role: values.id_role,          
+          role: values.role,          
       }
       axios.post(`http://127.0.0.1:8000/api/register`, register ).then(res =>{
           console.log(res.data)
@@ -106,7 +106,7 @@ export default function Create_User() {
             nama_bel:'',
             username:'',
             password:'',
-            id_role: '',
+            role: '',
         })
           
       })
