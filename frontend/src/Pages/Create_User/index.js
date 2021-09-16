@@ -34,7 +34,7 @@ export default function Create_User() {
       nama_bel:'',
       username:'',
       password:'',
-      role: '',
+      id_role: '',
       isError:false,
       })
     // const handleChange = (event) => {
@@ -49,8 +49,8 @@ export default function Create_User() {
       if(form==='nama_bel'){
           setValues(prev=>({...prev, nama_bel:value}))
       }
-      if(form==='role'){
-        setValues(prev=>({...prev, role:value}))
+      if(form==='id_role'){
+        setValues(prev=>({...prev, id_role:value}))
       }
       if(form==='username'){
         setValues(prev=>({...prev, username:value}))
@@ -75,7 +75,7 @@ export default function Create_User() {
           nama_bel: values.password,
           username: values.username,
           password: values.password,
-          role: values.role,          
+          id_role: values.id_role,          
       }
       axios.post(`http://127.0.0.1:8000/api/register`, register ).then(res =>{
           console.log(res.data)
@@ -84,7 +84,7 @@ export default function Create_User() {
             nama_bel:'',
             username:'',
             password:'',
-            role: '',
+            id_role: '',
         })
           
       })
@@ -140,7 +140,7 @@ export default function Create_User() {
           
           />
           <TextField
-          values={values.role} onChange={handleInput('role')}
+          values={values.id_role} onChange={handleInput('id_role')}
             variant="outlined"
             margin="normal"
             fullWidth

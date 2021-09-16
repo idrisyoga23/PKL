@@ -26,12 +26,12 @@ const PopUp = (Props) => {
                             <p>Yakin Mau Lanjut?</p>
                         </Flex>
                         <Flex direction="row" justify="center" className="btn_wrap" >
-                            <Link to='/detail-task'>
+                          
                             <Button variant="contained" color="primary" onClick={() => Props.handleClose() }>
                                 Tidak
                             </Button>
-                            </Link>
-                            <Link to ='/validation-task'>
+                            
+                            <Link to ='/detail-task'>
                             <Button variant="contained" color="primary" style={{marginLeft: '2em'}} onClick={() => Props.handleClose() }>
                                 Ya Tentu
                             </Button>

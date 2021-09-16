@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
-import PopUp from '../PopUp'
+import PopUp from '../PopUp2'
 import { Paper, Button } from '@material-ui/core';
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import BackupIcon from '@material-ui/icons/Backup';

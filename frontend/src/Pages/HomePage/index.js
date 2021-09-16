@@ -5,6 +5,9 @@ import Navbar from '../Navbar2'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@material-ui/core';
 
+import {Link } from "react-router-dom";
+
+
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
     { id: 'nama_project', label: 'Nama Proejct', minWidth: 100 },
@@ -57,12 +60,16 @@ const Homepage = () => {
         <Wrapper>
         <h1>Home</h1>
           <Flex direction="row" className="btn_wrap" >
+            <Link to="/create-project">
               <Button variant="contained" color="primary">
                   Project
               </Button>
+              </Link>
+              <Link to="/create-task">
               <Button variant="contained" color="primary" style={{marginLeft: '2em'}}>
                   Task
               </Button>
+              </Link>
           </Flex>
           <Flex direction="column">
                 <Flex direction="row" justify="center" style={{marginTop: "1em"}}>

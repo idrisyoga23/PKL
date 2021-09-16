@@ -6,7 +6,7 @@ import PopUp from '../PopUp'
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import BackupIcon from '@material-ui/icons/Backup';
 import Modal from '@material-ui/core/Modal';
-  
+import {Link} from 'react-router-dom';
 
 const DetailTask = () => { 
 
@@ -75,12 +75,16 @@ const DetailTask = () => {
                     </Paper>
                     </Flex>
                 <Flex direction="row" justify="center" className="btn_wrap" >
+                 
                     <Button variant="contained" color="primary" onClick={() => handleOpen() }>
                         Terima
                     </Button>
+                    
+                    
                     <Button variant="contained" color="primary" style={{marginLeft: '5em'}} onClick={() => handleOpen() }>
                         Tolak
                     </Button>
+                    
                 </Flex>
                 <PopUp open={open} handleClose={() => handleClose() } />
             </Wrapper> 
