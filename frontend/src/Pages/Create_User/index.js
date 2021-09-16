@@ -10,6 +10,21 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select'
 import axios from 'axios'
 
+const roles = [
+  {
+    value: 1,
+    label: 'Admin',
+  },
+  {
+    value: 2,
+    label: 'User',
+  },
+  {
+    value: 3,
+    label: 'Manager',
+  },
+];
+
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -25,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
   }));
   
 export default function Create_User() {
@@ -34,9 +55,10 @@ export default function Create_User() {
       nama_bel:'',
       username:'',
       password:'',
-      id_role: '',
+      role: 1,
       isError:false,
       })
+
     // const handleChange = (event) => {
     //   setRole(event.target.value);
     // };
@@ -140,16 +162,22 @@ export default function Create_User() {
           
           />
           <TextField
-          values={values.id_role} onChange={handleInput('id_role')}
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            name="role"
-            label="role"
-            type="role"
-            id="role"
-          
-          />
+          variant="outlined"
+          margin="normal"
+          id="outlined-select-role"
+          select
+          label="Select"
+          value={values.role} onChange={handleInput('role')}
+          fullWidt
+          helperText="Please select Role"
+        >
+          {roles.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+
            <Button
             type="submit"
             fullWidth
