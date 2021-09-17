@@ -81,7 +81,7 @@ function ResponsiveDrawer(props) {
     })
   }
 
-  const role = localStorage.getItem('id_role')
+  const role = localStorage.getItem('role')
   const username = localStorage.getItem('username')
 
   const handleDrawerToggle = () => {

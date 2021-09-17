@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import {Visibility, VisibilityOff} from '@material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 import { InputAdornment, IconButton } from '@material-ui/core';
+import {ROLE} from "../../enum";
 
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
@@ -54,10 +55,12 @@ const Login = () => {
                 else{
                     const { token } = res.data;
                     const { username } = res.data;
-                    const { role } = res.data;
+                    const { id_role } = res.data;
+                    const { id_user } = res.data;
                     localStorage.setItem('token', token);
                     localStorage.setItem('username', username)
-                    localStorage.setItem('role', role)
+                    localStorage.setItem("id_user", id_user)
+                    localStorage.setItem('role', ROLE[id_role])
                     history.push('/homepage')
                 }
             })

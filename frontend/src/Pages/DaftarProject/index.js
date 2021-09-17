@@ -1,30 +1,26 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import {STATUS} from "../../enum";
 // import './App.css'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@material-ui/core';
 
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
-    { id: 'nama_project', label: 'Nama Proejct', minWidth: 100 },
-    { id: 'status', label: 'Status', minWidth: 30 },
+    { id: 'nama_project', label: 'Nama Project', minWidth: 100 },
+    { id: 'nama_manager', label: 'Manager', minWidth: 30 },
+    { id: 'id_status', label: 'Status', minWidth: 30 },
+    { id: 'detail', label: 'Detail', minWidth: 30 },
+  
+  
   
     
   ];
   
-  function createData(no, nama_project, status) {
-    return { no, nama_project, status };
-  }
-  
-  const rows = [  
-    createData( 1, "Donatur Banjir", "Ditolak"),
-    createData( 2, "Donatur Banjir", "Ditolak"),
-    createData( 3, "Donatur Banjir", "Ditolak"),
-    createData( 4, "Donatur Banjir", "Ditolak"),
-    createData( 5, "Donatur Banjir", "Ditolak"),
-  
-  ];
+
   
   const useStyles = makeStyles({
     root: {
@@ -36,10 +32,22 @@ const columns = [
   });
 
 const DaftarProject = () => {
-
+const history = useHistory()
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [data, setData] = React.useState([])
+    const id_user= localStorage.getItem('id_user')
+    console.log(id_user)
+
+    React.useEffect(()=>{
+      axios.get(`http://127.0.0.1:8000/api/project?id_user=${id_user}`,).then(res =>{
+        console.log(res.data.data)
+       setData(res.data.data)
+        
+    })
+
+    },[])
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -81,16 +89,26 @@ const DaftarProject = () => {
                               </TableRow>
                           </TableHead>
                           <TableBody>
-                              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,idx) => {
                               return (
                                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                   {columns.map((column) => {
-                                      const value = row[column.id];
-                                      return (
-                                      <TableCell key={column.id} align={column.align}>
-                                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                                      </TableCell>
-                                      );
+                                 if(column.id=="detail"){
+                                  return (
+                                    <TableCell key={column.id} align={column.align}>
+                                      <Button color="primary" onClick={()=>history.push('/detail-project')}>DETAIL</Button>
+                                    </TableCell>
+                                    );
+
+                                }
+                                else{
+                                 const value = column.id ==="no" ?idx+1 : column.id==="id_status" ? STATUS[row[column.id]]:  row[column.id];
+                                  return (
+                                  <TableCell key={column.id} align={column.align}>
+                                      {column.format && typeof value === 'number' ? column.format(value) : value}
+                                  </TableCell>
+                                  );
+                                }
                                   })}
                                   </TableRow>
                               );
@@ -101,7 +119,7 @@ const DaftarProject = () => {
                       <TablePagination
                           rowsPerPageOptions={[10, 25, 100]}
                           component="div"
-                          count={rows.length}
+                          count={data.length}
                           rowsPerPage={rowsPerPage}
                           page={page}
                           onPageChange={handleChangePage}

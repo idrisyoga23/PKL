@@ -35,7 +35,8 @@ export default function Index() {
     const classes = useStyles();
     const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
     const [selectedDate1, setSelectedDate1] = React.useState(new Date('2020-08-18T21:11:54'));
-
+    const id_user= localStorage.getItem('id_user')
+    
     const handleDateChange = (date) => {
       setSelectedDate(date);
 
@@ -89,7 +90,8 @@ export default function Index() {
           tanggal_mulai: selectedDate,
           tanggal_akhir: selectedDate1,
           nama_karyawan: values.nama_karyawan,
-          deskripsi: values.deskripsi,          
+          deskripsi: values.deskripsi, 
+          id_user:id_user         
       }
       axios.post(`http://127.0.0.1:8000/api/task`, createtask ).then(res =>{
             console.log(res.data)
