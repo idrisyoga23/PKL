@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select'
 import axios from 'axios'
+import { headers } from '../../Config'
 
 const roles = [
   {
@@ -99,7 +100,7 @@ export default function Create_User() {
           password: values.password,
           role: values.role,          
       }
-      axios.post(`http://127.0.0.1:8000/api/register`, register ).then(res =>{
+      axios.post(`http://127.0.0.1:8000/api/register`, register , headers()).then(res =>{
           console.log(res.data)
           setValues({
             nama_depan:'',

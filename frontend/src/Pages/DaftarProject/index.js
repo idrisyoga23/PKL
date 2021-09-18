@@ -7,6 +7,7 @@ import {STATUS} from "../../enum";
 // import './App.css'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@material-ui/core';
+import { headers } from '../../Config';
 
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
@@ -41,7 +42,7 @@ const history = useHistory()
     console.log(id_user)
 
     React.useEffect(()=>{
-      axios.get(`http://127.0.0.1:8000/api/project?id_user=${id_user}`,).then(res =>{
+      axios.get(`http://127.0.0.1:8000/api/project?id_user=${id_user}`, headers()).then(res =>{
         console.log(res.data.data)
        setData(res.data.data)
         

@@ -13,6 +13,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { headers } from '../../Config';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -96,7 +97,7 @@ export default function Index() {
           deskripsi: values.deskripsi,      
           id_user:id_user    
       }
-      axios.post(`http://127.0.0.1:8000/api/project`, createproject ).then(res =>{
+      axios.post(`http://127.0.0.1:8000/api/project`, createproject,headers() ).then(res =>{
             console.log(res.data)
             setValues({
               nama_project:'',

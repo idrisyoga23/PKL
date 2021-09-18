@@ -1,16 +1,27 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
+import { styled } from '@mui/material/styles';
 import { Paper, Button } from '@material-ui/core';
 import PopUp from '../PopUp'
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import IconButton from '@mui/material/IconButton';
+import {PhotoCamera} from '@mui/icons-material';
 import BackupIcon from '@material-ui/icons/Backup';
 import Modal from '@material-ui/core/Modal';
 import {Link} from 'react-router-dom';
 
+const Input = styled('input')({
+    display: 'none',
+});
+
 const DetailTask = () => { 
 
     const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState({
+        selectedFile : null,
+    });
 
     const handleOpen = () => {
         setOpen(true);
@@ -19,6 +30,12 @@ const DetailTask = () => {
       const handleClose = () => {
         setOpen(false);
       };
+
+
+      const handleChange = (event) => {
+          console.log(event.target.files[0])
+      };
+      
 
     return (
         <>
@@ -70,7 +87,13 @@ const DetailTask = () => {
                             <NoteAddIcon fontSize="large" />
                         </Flex>
                         <Flex direction="row" justify="center" alignItems="center">
-                            <BackupIcon className="upload-btn" />
+                        <label htmlFor="icon-button-file">
+                            <Input accept="/" id="icon-button-file" type="file" />
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                            <DownloadForOfflineIcon />
+                            </IconButton>
+                        </label>
+                        
                         </Flex>
                     </Paper>
                     </Flex>
