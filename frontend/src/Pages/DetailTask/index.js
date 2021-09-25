@@ -34,7 +34,7 @@ const DetailTask = () => {
 
       const handleChange = (event) => {
           console.log(event.target.files[0])
-      };
+      }
       
 
     return (
@@ -88,7 +88,7 @@ const DetailTask = () => {
                         </Flex>
                         <Flex direction="row" justify="center" alignItems="center">
                         <label htmlFor="icon-button-file">
-                            <Input accept="/" id="icon-button-file" type="file" />
+                            <Input accept="/" id="icon-button-file" type="file" name="file" onClick={() => handleChange()}/>
                             <IconButton color="primary" aria-label="upload picture" component="span">
                             <DownloadForOfflineIcon />
                             </IconButton>

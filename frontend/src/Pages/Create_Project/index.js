@@ -13,7 +13,10 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+
+import {Autocomplete} from '@material-ui/lab';
 import { headers } from '../../Config';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,6 +39,8 @@ export default function Index() {
     const classes = useStyles();
     const [selectedDate, setSelectedDate] = React.useState(new Date('2021-08-18T21:11:54'));
     const [selectedDate1, setSelectedDate1] = React.useState(new Date('2021-08-18T21:11:54'));
+    const [listManager, setListManager] = React.useState([]);
+    const [listKaryawan, setListKaryawan]= React.useState([]);
     const id_user= localStorage.getItem('id_user')
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -50,6 +55,7 @@ export default function Index() {
     const handleOpen = () => {
         setOpen(true);
     };
+
       
     const handleClose = () => {
         setOpen(false);
@@ -76,13 +82,17 @@ export default function Index() {
         setValues(prev=>({...prev, deskripsi:value}))
       }
   }
+  const [inputKaryawanValue, setInputKaryawanValue] = React.useState('');
+  const [inputManagerValue, setInputManagerValue] = React.useState('');
     
     const [values, setValues] = React.useState({
       nama_project:'',
       tanggal_mulai:'',
       tanggal_akhir:'',
-      nama_manager:'',
-      nama_karyawan: '',
+      nama_karyawan:"",
+      nama_manager:"",
+      id_manager:null,
+      id_karyawan: null,
       deskripsi: '',
       isError:false,
       })
@@ -110,6 +120,29 @@ export default function Index() {
             
         })
     }
+
+    const getListManager = ()=>{
+      axios.get(`http://127.0.0.1:8000/api/users?type=3`,headers() ).then(res =>{
+
+        setListManager(res.data.data)
+        
+      })
+
+    }
+
+    const getListKaryawan = ()=>{
+      axios.get(`http://127.0.0.1:8000/api/users?type=2`,headers() ).then(res =>{
+      
+        setListKaryawan(res.data.data)
+        
+      })
+
+    }
+
+React.useEffect(() => {
+   getListKaryawan();
+   getListManager()
+    }, [])
     return (
         <>
          <Navbar />
@@ -156,24 +189,81 @@ export default function Index() {
             'aria-label': 'change date',
           }}
         />
-        <TextField
-            values={values.nama_manager} onChange={handleInput('nama_manager')}
-            variant="outlined"
-            margin="normal"
-       
-            fullWidth
-            label="Nama Manager"
+ 
+ <Autocomplete
+        value={values.id_manager}
+        onChange={(event, newValue) => {
+
+          setValues((prev)=>({...prev, id_manager:parseInt(newValue.id_user)}));
+        }}
+        inputValue={inputManagerValue}
+        options={listManager}
+        classes={{
+          option: classes.option,
+        }}
+        autoHighlight
+        getOptionLabel={(option) => {
+        
+          return option.id_user.toString()
+        }}
+        renderOption={({nama_depan, nama_bel}) => {
+         
+          return(
+          <React.Fragment>
+            {nama_depan} {nama_bel}
+          </React.Fragment>
+          )
+         } }  
+        
+        onInputChange={(event, newInputValue) => {
           
-          />
-          <TextField
-            values={values.nama_karyawan} onChange={handleInput('nama_karyawan')}
-            variant="outlined"
-            margin="normal"
+          setInputKaryawanValue(newInputValue);
+        }}
+        
+     
+         id="country-select-demo"
+ 
+        style={{ width: "100%" }}
+        renderInput={(params) => <TextField {...params}  label="Nama Manager" />}
+      /> 
        
-            fullWidth
-            label="Nama karyawan"
+<Autocomplete
+        value={values.id_karyawan}
+        onChange={(event, newValue) => {
+
+          setValues((prev)=>({...prev, id_karyawan:parseInt(newValue.id_user)}));
+        }}
+        inputValue={inputKaryawanValue}
+        options={listKaryawan}
+        classes={{
+          option: classes.option,
+        }}
+        autoHighlight
+        getOptionLabel={(option) => {
+        
+          return option.id_user.toString()
+        }}
+        renderOption={({nama_depan, nama_bel}) => {
+         
+          return(
+          <React.Fragment>
+            {nama_depan} {nama_bel}
+          </React.Fragment>
+          )
+         } }  
+        
+        onInputChange={(event, newInputValue) => {
           
-          />
+          setInputKaryawanValue(newInputValue);
+        }}
+        
+     
+         id="country-select-demo"
+ 
+        style={{ width: "100%"}}
+        renderInput={(params) => <TextField {...params}  label="Nama Karyawan" />}
+      /> 
+         
           <TextField
                 values={values.deskripsi} onChange={handleInput('deskripsi')}
                 id="standard-textarea"
