@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Wrapper } from './styles'
-import Navbar from '../Navbar2'
+import { useState } from 'react';
+import Navbar from '../Navbar2';
 import { styled } from '@mui/material/styles';
 import { Paper, Button } from '@material-ui/core';
 import PopUp from '../PopUp'
@@ -10,18 +11,37 @@ import IconButton from '@mui/material/IconButton';
 import {PhotoCamera} from '@mui/icons-material';
 import BackupIcon from '@material-ui/icons/Backup';
 import Modal from '@material-ui/core/Modal';
-import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {STATUS} from "../../enum";
 
+import { Link, useLocation } from 'react-router-dom';
+import qs from 'query-string';
+
+import { headers } from '../../Config';
 const Input = styled('input')({
     display: 'none',
 });
 
 const DetailTask = () => { 
 
+    const location = useLocation();
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState({
-        selectedFile : null,
-    });
+    const [file, setFile] = useState(null);
+    const role = localStorage.getItem('role')
+    const [data, setData] = useState(null);
+    const id = qs.parse(location.search).id;
+
+
+
+    React.useEffect(()=>{
+        axios.get(`http://127.0.0.1:8000/api/task/detail?id_task=${id}`,headers()).then((el)=>{
+
+            setData(el.data.data);
+        })
+
+
+    },[])
+    console.log(data)
 
     const handleOpen = () => {
         setOpen(true);
@@ -31,11 +51,22 @@ const DetailTask = () => {
         setOpen(false);
       };
 
-
-      const handleChange = (event) => {
-          console.log(event.target.files[0])
+      const onInputChange = (e) => {
+        //   console.log(e.target.files)
+          setFile(e.target.value)
       }
-      
+       const handleSumbit = (e) => {
+          const data = new FormData();
+          data.append('file',file);
+          axios.post(`localhost:8000/upload`.data)
+          .then((e) => {
+              console.log('succes')
+          })
+          .catch( (e) => {
+              console.error('Error',e)
+          })
+        };
+        
 
     return (
         <>
@@ -53,23 +84,18 @@ const DetailTask = () => {
                                 <p>Status:</p>
                             </Flex>
                             <Flex direction="column" alignItems="space-around" style={{marginRight: "11em"}}>
-                                <p>Pengelolahan Sampah</p>
-                                <p>12 April 2021</p>
-                                <p>30 April 2021</p>
-                                <p>Budi Sudarsono</p>
-                                <p>Selesai</p>
+                                <p>{data?.nama_task}</p>
+                                <p>{data?.tanggal_mulai}</p>
+                                <p>{data?.tanggal_akhir}</p>
+                                <p>{data?.nama_karyawan.join(",")}</p>
+                                <p>{data?.nama_status}</p>
                             </Flex>
                         </Flex>
                     </Paper>
                     <Paper className="box">
                             <Flex direction="column" alignItems="space-around" className="title-wrap">
                                 <p style={{color: "#0072BC"}}>Deskripsi:</p>
-                                <p className="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                                    It has survived not only five centuries, but also the leap into electronic typesetting, 
-                                    remaining essentially unchanged. 
-                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                                <p className="description">{data?.deskripsi}
                                 </p>
                             </Flex>
                     </Paper>
@@ -88,27 +114,34 @@ const DetailTask = () => {
                         </Flex>
                         <Flex direction="row" justify="center" alignItems="center">
                         <label htmlFor="icon-button-file">
-                            <Input accept="/" id="icon-button-file" type="file" name="file" onClick={() => handleChange()}/>
+                            <Input accept="/" id="icon-button-file" type="file" onChange={onInputChange} name="file"/>
                             <IconButton color="primary" aria-label="upload picture" component="span">
                             <DownloadForOfflineIcon />
                             </IconButton>
                         </label>
-                        
                         </Flex>
                     </Paper>
                     </Flex>
-                <Flex direction="row" justify="center" className="btn_wrap" >
-                 
-                    <Button variant="contained" color="primary" onClick={() => handleOpen() }>
-                        Terima
+                    
+                    <Flex direction="row" justify="center" className="btn-wrap">
+                    <Button method="post"variant="contained" color="primary" onClick={(e) => handleSumbit() }>
+                        Submit
                     </Button>
-                    
-                    
-                    <Button variant="contained" color="primary" style={{marginLeft: '5em'}} onClick={() => handleOpen() }>
-                        Tolak
-                    </Button>
-                    
-                </Flex>
+                    </Flex>
+                    {role==="manager" && 
+                     <Flex direction="row" justify="center" className="btn_wrap" >
+                   
+                     <Button variant="contained" color="primary" onClick={() => handleOpen() }>
+                         Terima
+                     </Button>
+                     
+                     
+                     <Button variant="contained" color="primary" style={{marginLeft: '5em'}} onClick={() => handleOpen() }>
+                         Tolak
+                     </Button>
+                     
+                 </Flex>}
+               
                 <PopUp open={open} handleClose={() => handleClose() } />
             </Wrapper> 
         </>

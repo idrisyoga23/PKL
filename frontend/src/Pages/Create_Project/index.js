@@ -4,7 +4,7 @@ import Navbar from '../Navbar2'
 import PopUp from '../PopUp'
 import { Wrapper } from './style'
 import Button from '@material-ui/core/Button'
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem, FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -17,7 +17,16 @@ import {
 import {Autocomplete} from '@material-ui/lab';
 import { headers } from '../../Config';
 
-
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -92,7 +101,7 @@ export default function Index() {
       nama_karyawan:"",
       nama_manager:"",
       id_manager:null,
-      id_karyawan: null,
+      id_karyawan: [],
       deskripsi: '',
       isError:false,
       })
@@ -102,11 +111,12 @@ export default function Index() {
           nama_project: values.nama_project,
           tanggal_mulai: selectedDate,
           tanggal_akhir: selectedDate1,
-          nama_manager: values.nama_manager,
-          nama_karyawan: values.nama_karyawan,
+          id_manager: values.id_manager,
+          id_karyawan: values.id_karyawan,
           deskripsi: values.deskripsi,      
           id_user:id_user    
       }
+      
       axios.post(`http://127.0.0.1:8000/api/project`, createproject,headers() ).then(res =>{
             console.log(res.data)
             setValues({
@@ -120,6 +130,7 @@ export default function Index() {
             
         })
     }
+    console.log(values)
 
     const getListManager = ()=>{
       axios.get(`http://127.0.0.1:8000/api/users?type=3`,headers() ).then(res =>{
@@ -189,80 +200,56 @@ React.useEffect(() => {
             'aria-label': 'change date',
           }}
         />
- 
- <Autocomplete
+  <FormControl fullWidth>
+    <InputLabel id="demo-simple-select-label">Nama Manager</InputLabel>
+    <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
         value={values.id_manager}
-        onChange={(event, newValue) => {
-
-          setValues((prev)=>({...prev, id_manager:parseInt(newValue.id_user)}));
+        label="Manager"
+        onChange={(e)=>{
+          setValues((prev)=>({...prev, id_manager:parseInt(e.target.value)}));
         }}
-        inputValue={inputManagerValue}
-        options={listManager}
-        classes={{
-          option: classes.option,
-        }}
-        autoHighlight
-        getOptionLabel={(option) => {
-        
-          return option.id_user.toString()
-        }}
-        renderOption={({nama_depan, nama_bel}) => {
-         
+      >
+        {listManager.map((el,idx)=>{
           return(
-          <React.Fragment>
-            {nama_depan} {nama_bel}
-          </React.Fragment>
+            <MenuItem value={el.id_user}>{el.nama_depan} {el.nama_bel}</MenuItem>
           )
-         } }  
-        
-        onInputChange={(event, newInputValue) => {
-          
-          setInputKaryawanValue(newInputValue);
-        }}
-        
-     
-         id="country-select-demo"
- 
-        style={{ width: "100%" }}
-        renderInput={(params) => <TextField {...params}  label="Nama Manager" />}
-      /> 
-       
-<Autocomplete
-        value={values.id_karyawan}
-        onChange={(event, newValue) => {
+        })}
+      
+      </Select>
+    </FormControl>
 
-          setValues((prev)=>({...prev, id_karyawan:parseInt(newValue.id_user)}));
-        }}
-        inputValue={inputKaryawanValue}
-        options={listKaryawan}
-        classes={{
-          option: classes.option,
-        }}
-        autoHighlight
-        getOptionLabel={(option) => {
+    <FormControl fullWidth>
+        <InputLabel id="demo-multiple-name-label">Nama Karyawan</InputLabel>
+        <Select
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple
+          value={values.id_karyawan}
+          onChange={(event) => {
+            const {
+              target: { value },
+            } = event;
+            console.log(value);
+            setValues(
+             
+              (prev)=>({...prev,id_karyawan:typeof value === 'string' ? value.split(',') : value,
+             }) )}}
         
-          return option.id_user.toString()
-        }}
-        renderOption={({nama_depan, nama_bel}) => {
-         
-          return(
-          <React.Fragment>
-            {nama_depan} {nama_bel}
-          </React.Fragment>
-          )
-         } }  
-        
-        onInputChange={(event, newInputValue) => {
-          
-          setInputKaryawanValue(newInputValue);
-        }}
-        
-     
-         id="country-select-demo"
- 
-        style={{ width: "100%"}}
-        renderInput={(params) => <TextField {...params}  label="Nama Karyawan" />}
-      /> 
+          MenuProps={MenuProps}
+        >
+          {listKaryawan.map((el) => (
+            <MenuItem
+              key={el.id_user}
+              value={el.id_user}
+             
+            >
+              {el.nama_depan}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
          
           <TextField
                 values={values.deskripsi} onChange={handleInput('deskripsi')}

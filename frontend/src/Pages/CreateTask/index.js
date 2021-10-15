@@ -4,7 +4,7 @@ import Navbar from '../Navbar2'
 import PopUp from '../PopUp'
 import { Wrapper } from './style'
 import Button from '@material-ui/core/Button'
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem, FormControl, InputLabel, MenuProps} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -36,7 +36,18 @@ export default function Index() {
     const classes = useStyles();
     const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
     const [selectedDate1, setSelectedDate1] = React.useState(new Date('2020-08-18T21:11:54'));
+    const [listKaryawan, setListKaryawan]= React.useState([]);
     const id_user= localStorage.getItem('id_user')
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 250,
+        },
+      },
+    };
     
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -81,6 +92,7 @@ export default function Index() {
       tanggal_mulai:'',
       tanggal_akhir:'',
       nama_karyawan: '',
+      id_karyawan:[],
       deskripsi: '',
       isError:false,
       })
@@ -90,11 +102,11 @@ export default function Index() {
           nama_task: values.nama_task,
           tanggal_mulai: selectedDate,
           tanggal_akhir: selectedDate1,
-          nama_karyawan: values.nama_karyawan,
+          id_karyawan: values.id_karyawan,
           deskripsi: values.deskripsi, 
           id_user:id_user         
       }
-      axios.post(`http://127.0.0.1:8000/api/task`, createtask ,headers()).then(res =>{
+      axios.post(`http://127.0.0.1:8000/api/task`, createtask , headers()).then(res =>{
             console.log(res.data)
             setValues({
               nama_task:'',
@@ -106,6 +118,17 @@ export default function Index() {
             
         })
     }
+    const getListKaryawan = ()=>{
+      axios.get(`http://127.0.0.1:8000/api/users?type=2`,headers() ).then(res =>{
+ 
+        setListKaryawan(res.data.data)
+        
+      })
+
+    }
+    React.useEffect(() => {
+      getListKaryawan();
+       }, [])
 
     return (
         <>
@@ -152,16 +175,36 @@ export default function Index() {
             'aria-label': 'change date',
           }}
         />
+        <FormControl fullWidth>
+        <InputLabel  id="demo-multiple-name-label">Nama Karyawan</InputLabel>
+        <Select
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple
+          value={values.id_karyawan}
+          onChange={(event) => {
+            const {
+              target: { value },
+            } = event;
+            console.log(value);
+            setValues(
+             
+              (prev)=>({...prev,id_karyawan:typeof value === 'string' ? value.split(',') : value,
+             }) )}}
         
-          <TextField
-            values={values.nama_karyawan} onChange={handleInput('nama_karyawan')}
-            variant="outlined"
-            margin="normal"
-       
-            fullWidth
-            label="Nama karyawan"
-          
-          />
+          MenuProps={MenuProps}
+        >
+          {listKaryawan.map((el) => (
+            <MenuItem
+              key={el.id_user}
+              value={el.id_user}
+             
+            >
+              {el.nama_depan}
+            </MenuItem>
+          ))}
+        </Select>
+        </FormControl>
           <TextField
                 values={values.deskripsi} onChange={handleInput('deskripsi')}
                 id="standard-textarea"

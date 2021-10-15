@@ -1,16 +1,20 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { Flex, Wrapper } from './styles'
 import Navbar from '../Navbar2'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, IconButton } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import qs from 'query-string';
+import { headers } from '../../Config';
 
+import {STATUS} from "../../enum";
 const columns = [
     { id: 'no', label: 'No', minWidth: 30 },
-    { id: 'nama_project', label: 'Nama Proejct', minWidth: 100 },
+    { id: 'nama_task', label: 'Nama Task', minWidth: 100 },
     { id: 'nama_karyawan', label: 'Nama Karyawan', minWidth: 50 },
-    { id: 'status', label: 'Status', minWidth: 30 },
+    { id: 'nama_status', label: 'Status', minWidth: 30 },
   
     
   ];
@@ -38,10 +42,32 @@ const columns = [
   });
 
 const DetailProject = () => {
-
+  
+    const location = useLocation();
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const id = qs.parse(location.search).id;
+    const [data, setData] = useState(null);
+    const [task, setTask] = useState([]);
+    const id_user= localStorage.getItem('id_user')
+    console.log(id_user)
+
+ 
+  
+
+    useEffect(()=>{
+
+        axios.get(`http://127.0.0.1:8000/api/project/detail?id_project=${id}`,headers()).then((el)=>{
+            setData(el.data.data);
+        })
+
+        axios.get(`http://127.0.0.1:8000/api/task?id_user=${id_user}&id_project=${id}`,headers()).then(res =>{
+           setTask(res.data.data)
+            
+        })
+    },[])
+    console.log(task)
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -68,22 +94,17 @@ const DetailProject = () => {
                                 <p>Project Manager:</p>
                             </Flex>
                             <Flex direction="column" alignItems="space-around" style={{marginRight: "11em"}}>
-                                <p>Pengelolahan Sampah</p>
-                                <p>12 April 2021</p>
-                                <p>30 April 2021</p>
-                                <p>Budi Sudarsono</p>
+                                <p>{data?.nama_project}</p>
+                                <p>{data?.tanggal_mulai}</p>
+                                <p>{data?.tanggal_akhir}</p>
+                                <p>{data?.nama_manager}</p>
                             </Flex>
                         </Flex>
                     </Paper>
                     <Paper className="box">
                             <Flex direction="column" alignItems="space-around" className="title-wrap">
                                 <p style={{color: "#0072BC"}}>Deskripsi:</p>
-                                <p className="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                                    It has survived not only five centuries, but also the leap into electronic typesetting, 
-                                    remaining essentially unchanged. 
-                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                                <p className="description">{data?.deskripsi}
                                 </p>
                             </Flex>
                     </Paper>
@@ -119,11 +140,11 @@ const DetailProject = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                {task.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,index) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                    {columns.map((column) => {
-                                        const value = row[column.id];
+                                    {columns.map((column,idx) => {
+                                        const value = column.id ==="no" ?idx+1 : column.id==="id_status" ? STATUS[row[column.id]]:  row[column.id];
                                         return (
                                         <TableCell key={column.id} align={column.align}>
                                             {column.format && typeof value === 'number' ? column.format(value) : value}

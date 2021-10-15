@@ -99,7 +99,7 @@ const DaftarTask = () => {
                                     if(column.id=="detail"){
                                       return (
                                         <TableCell key={column.id} align={column.align}>
-                                          <Button color="primary" onClick={()=>history.push('/detail-task')}>DETAIL</Button>
+                                          <Button color="primary" onClick={()=>history.push(`/detail-task?id=${row.id_task}`)}>DETAIL</Button>
                                         </TableCell>
                                         );
 
@@ -108,7 +108,10 @@ const DaftarTask = () => {
                                      const value = column.id ==="no" ?idx+1 : column.id==="id_status" ? STATUS[row[column.id]]:  row[column.id];
                                       return (
                                       <TableCell key={column.id} align={column.align}>
-                                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                                          {column.format && typeof value === 'number' ? column.format(value) : 
+                                          Array.isArray(value) ? value.join(","):
+                                          
+                                          value}
                                       </TableCell>
                                       );
                                     }

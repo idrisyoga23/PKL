@@ -91,13 +91,14 @@ const history = useHistory()
                           </TableHead>
                           <TableBody>
                               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,idx) => {
+                              
                               return (
                                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                   {columns.map((column) => {
                                  if(column.id=="detail"){
                                   return (
                                     <TableCell key={column.id} align={column.align}>
-                                      <Button color="primary" onClick={()=>history.push('/detail-project')}>DETAIL</Button>
+                                      <Button color="primary" onClick={()=>history.push(`/detail-project?id=${row.id_project}`)}>DETAIL</Button>
                                     </TableCell>
                                     );
 
